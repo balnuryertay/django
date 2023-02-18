@@ -2,13 +2,20 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpRespons
     HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
+from .models import *
+
+menu = ["Біз туралы", "Тур агенттіктер", "Байланыс", "Логин"]
 
 def index(request):
-    return HttpResponse("Страница приложения travel.")
+    posts = Travel.objects.all()
+    return render(request, 'travel/index.html', {'posts': posts, 'menu': menu, 'title': 'Travel Land'})
+
+def about(request):
+    return render(request, 'travel/about.html', {'menu': menu, 'title': 'About us'})
 
 def categories(request, catid):
-    if(request.GET):
-        print(request.GET)
+    if(request.POST):
+        print(request.POST)
 
     return HttpResponse(f"<h1>Статьи по категориям</h1><p>{catid}</p>")
 
