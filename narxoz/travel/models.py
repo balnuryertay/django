@@ -6,6 +6,7 @@ class Travel(models.Model):
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     content = models.TextField(blank=True, verbose_name="Анықтама")
     photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="Фото")
+    price = models.TextField(blank=True, verbose_name="Бағасы")
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Сақталған уақыты")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Өзгертілген уақыты")
     is_published = models.BooleanField(default=True, verbose_name="Публикация")

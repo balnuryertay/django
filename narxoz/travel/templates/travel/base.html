@@ -1,74 +1,202 @@
 {% load static %}
 {% load travel_tags %}
 <!DOCTYPE html>
-<html>
-<head>
-	<title>{{title}}</title>
-	<link type="text/css" href="{% static 'travel/css/styles.css' %}" rel="stylesheet" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="shortcut icon" href="{% static 'travel/images/main.ico' %}" type="image/x-icon"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en" class=" js no-flexbox flexbox-legacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths boxsizing speechinput no-overflowscrolling cssresize placeholder cssscrollbar formvalidation"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title>{{title}}</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+
+<link href="http://fonts.googleapis.com/css?family=Lato:400,400italic,700|Sorts+Mill+Goudy:400,400italic" rel="stylesheet">
+
+<!-- Mobile viewport optimized: h5bp.com/viewport -->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'travel/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'travel/css/screen.css' %}">
+<!-- custom CSS -->
+<link rel="stylesheet" href="{% static 'travel/css/custom.css' %}">
+
+<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
+<!-- JS libs -->
+<script src="{% static 'travel/js/modernizr-2.5.3.min.js' %}"></script>
+<script src="{% static 'travel/js/respond.min.js' %}"></script>
+<script src="{% static 'travel/js/jquery.min.js' %}"></script>
+
+<!-- scripts -->
+<script src="{% static 'travel/js/jquery.easing.1.3.min.js' %}"></script>
+<script src="{% static 'travel/js/hoverIntent.js' %}"></script>
+<script src="{% static 'travel/js/general.js' %}"></script>
+<!-- sliders -->
+<script src="{% static 'travel/js/slides.min.jquery.js' %}"></script>
+<!-- range sliders -->
+<script src="{% static 'travel/js/jquery.slider.bundle.js' %}"></script>
+<script src="{% static 'travel/js/jquery.slider.js' %}"></script>
+<link rel="stylesheet" href="{% static 'travel/css/jslider.css' %}">
+<!-- custom input -->
+<link href="{% static 'travel/css/customInput.css' %}" rel="stylesheet">
+<script src="{% static 'travel/js/jquery.customInput.js' %}"></script>
+<!-- datepicker -->
+<link href="{% static 'travel/css/jquery-ui-1.8.20.custom.css' %}" rel="stylesheet">
+<script src="{% static 'travel/js/jquery-ui-1.8.20.custom.min.js' %}"></script>
+<script>
+	jQuery(document).ready(function($) {
+		$("#date_in, #date_out").datepicker({
+			dateFormat: 'MM dd, yy',
+			minDate: 0,
+			showOtherMonths: true
+		});
+	});
+</script>
+
 </head>
 <body>
-<table class="table-page" border=0 cellpadding="0" cellspacing="0">
-<tr><td valign=top>
-{% block mainmenu %}
-		<div class="header">
-			<ul id="mainmenu" class="mainmenu">
-			<li class="logo"><a href="{% url 'home' %}"><div class="logo"></div></a></li>
-{% for m in menu %}
-	{% if not forloop.last %}
-			<li><a href="{% url m.url_name %}">{{m.title}}</a></li>
-	{% else %}
-			<li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
-	{% endif %}
-{% endfor %}
-			</ul>
-			<div class="clear"></div>
+<div class="body_wrap homepage">
+
+<div class="header" style="background-image: url(https://www.sispark.it/media/page/sispark-home-4333-en.jpg)">
+	<div class="container_12">
+
+        <div class="logo">
+   	    	<a href="#" hidefocus="true" style="outline: none;"><img src="{% static 'travel/images/post.png' %}" alt=""></a>
+            <h1>Туристік сайт</h1>
+        </div>
+
+      	<div class="header_right">
+
+            <div class="header_phone">
+	        	<p>Қоңырауыңызды күтеміз: &nbsp; <strong style="color: #A7E8FF">+7 707-777-17-07</strong></p>
+	        </div>
+
+            <div class="clear"></div>
+        </div>
+        <style>
+			.topmenu .dropdown li { margin: 0 0 0 35px; }
+		</style>
+        <div class="topmenu">
+			{% block mainmenu %}
+				<ul class="dropdown" style="font-size: 12px; text-transform: uppercase;">
+					<li class="logo"><a href="{% url 'home' %}"><div class="logo"></div></a></li>
+					{% for m in menu %}
+						{% if not forloop.last %}
+								<li><a href="{% url m.url_name %}">{{m.title}}</a></li>
+						{% else %}
+								<li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+				<div class="clear"></div>
+			{% endblock mainmenu %}
+        </div>
+		<div id="topmenu-select"><select class="select_styled" id="topm-select"><option value="index.html" selected="">
+			Home</option><option value="#" disabled="disabled">Destinations</option><option value="offers-list.html"> &nbsp;|--  North America</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- USA MAINLAND</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Canada</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Hawaii</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Alaska</option><option value="offers-list.html"> &nbsp;|--  Central &amp; South America</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Argentina</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Belize</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Bolivia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Brasil</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Chile &amp; Easter Island</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Columbia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Costa Rica</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Ecuador</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- See all Destinations</option><option value="offers-list.html"> &nbsp;|--  Africa &amp; Middle East</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- South Africa</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Tanzania</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Tunisia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Maroco</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Egipt</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Kenya</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Dubai &amp; UAE</option><option value="offers-list.html"> &nbsp;|--  EUROPE</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- United Kingdom</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- France</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Greece</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Spain</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Germany</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Croatia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Romania</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Cyprus</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- See all Destinations</option><option value="offers-list.html"> &nbsp;|--  ASIA &amp; SOUTH PACIFIC</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Australia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- China</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Philipinnes</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- India</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Indonesia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Malaysia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Singapore</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Thailand</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- See all Destinations</option><option value="#" disabled="disabled">Special Offers</option><option value="#" disabled="disabled">Holidays</option><option value="offers-list.html"> &nbsp;|-- North America</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- USA MAINLAND</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Canada</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Hawaii</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Alaska</option><option value="offers-list.html"> &nbsp;|-- Central &amp; South America</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Argentina</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Belize</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Bolivia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Brasil</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Chile &amp; Easter Island</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Columbia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Costa Rica</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Ecuador</option><option value="offers-list.html"> &nbsp;|-- Africa &amp; Middle East</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- South Africa</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Tanzania</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Tunisia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Maroco</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Egipt</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Kenya</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Dubai &amp; UAE</option><option value="offers-list.html"> &nbsp;|-- EUROPE</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- United Kingdom</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- France</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Greece</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Spain</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Germany</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Croatia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Romania</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Cyprus</option><option value="offers-list.html"> &nbsp;|-- ASIA &amp; SOUTH PACIFIC</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Australia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- China</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Philipinnes</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- India</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Indonesia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Malaysia</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Singapore</option><option value="offers-list.html"> &nbsp;&nbsp;&nbsp;&nbsp;|-- Thailand</option><option value="#" disabled="disabled">City Breaks</option><option value="#" disabled="disabled">Flights</option><option value="blog.html">Our Blog</option><option value="contact.html">Contact us</option></select></div>
+
+
+
+		<div class="pagination_wrap1">
+			<div class="pagination_inner" style="width: 1250px; align-items: left;">
+				<ul class="pagination">
+					{% if cat_selected == 0 %}
+						<li class="" style="width: 104.5px;"><a href="#0" hidefocus="true" style="outline: none;">Барлық&nbsp;категориялар</a></li>
+					{% else %}
+						<li class="" style="width: 104.5px;"><a href="{% url 'home' %}" hidefocus="true" style="outline: none;">Барлық&nbsp;категориялар</a></li>
+					{% endif %}
+
+					{% show_categories '-name' cat_selected %}
+				</ul>
+			</div>
 		</div>
-{% endblock mainmenu %}
-
-
-<table class="table-content" border=0 cellpadding="0" cellspacing="0">
-<tr>
-<!-- Sidebar слева -->
-	<td valign="top" class="left-chapters">
-	<ul id="leftchapters">
-{% if cat_selected == 0 %}
-		<li class="selected">Барлық категориялар</li>
-{% else %}
-		<li><a href="{% url 'home' %}">Барлық категориялар</a></li>
-{% endif %}
-
-{% show_categories '-name' cat_selected %}
-
-		<li class="share">
-		<p>Наш канал</p>
-		<a class="share-yt" href="https://www.youtube.com/channel/UClJzWfGWuGJL2t-3dYKcHTA/playlists" target="_blank" rel="nofollow"></a>
-		</li>
-	</ul>
-</td>
-<!-- Конец Sidebar'а -->
-<td valign="top" class="content">
-	<!-- Хлебные крошки -->
-	{% block breadcrumbs %}
-	{% endblock %}
+    </div>
+</div>
+<!--/ header -->
 
 <!-- Блок контента -->
-	<div class="content-text">
-{% block content %}
-{% endblock %}
-	</div>
+<div class="content-text">
+	{% block content %}
+	{% endblock %}
+</div>
 <!-- Конец блока контента -->
 
-</td></tr></table>
-</td></tr>
-<!-- Footer -->
-<tr><td valign=top>
-	<div id="footer">
-		<p>&copy; 2021 Частичное или полное копирование информации с данного сайта для распространения на других ресурсах, в том числе и бумажных, строго запрещено.</p>
+<!-- footer -->
+<div class="footer">
+<!--	<img src="https://www.salclean.com/wp-content/uploads/2016/01/footer-bg.jpg" alt="">-->
+	<div class="footer_inner" style="background-image: url(https://abgrealty.com/images/footer-bg.jpg)">
+		<div class="container_12">
+
+			<!--# footer col 1 -->
+			<div class="widgetarea f_col_1">
+
+				<!-- widget_categories -->
+				<div class="widget-container widget_categories">
+					<h3 style="text-transform: uppercase;font-size:16px;" class="widget-title"></h3>
+						<ul>
+							<li class="even"><a href="#" hidefocus="true" style="outline: none;"><span>АФРИКА</span></a></li>
+							<li><a href="#" hidefocus="true" style="outline: none;"><span>АМЕРИКА</span></a></li>
+							<li class="even"><a href="#" hidefocus="true" style="outline: none;"><span>АВСТРАЛИЯ</span></a></li>
+							<li><a href="#" hidefocus="true" style="outline: none;"><span>МЕХИКО</span></a></li>
+							<li class="even"><a href="#" hidefocus="true" style="outline: none;"><span>АЗИЯ</span></a></li>
+							<li><a href="#" hidefocus="true" style="outline: none;"><span>ЧИЛИ</span></a></li>
+							<li class="even"><a href="#" hidefocus="true" style="outline: none;"><span>ЕВРОПА</span></a></li>
+							<li><a href="#" hidefocus="true" style="outline: none;"><span>КАРИБЫ</span></a></li>
+							<li class="even"><a href="#" hidefocus="true" style="outline: none;"><span>ТИХИЙ ОКЕАН</span></a></li>
+							 <li><a href="#" hidefocus="true" style="outline: none;"><span>МАЛЬДИВЫ</span></a></li>
+						</ul>
+				</div>
+				<!--/ widget_categories -->
+			</div>
+			<!--/ footer col 1 -->
+
+			<!--# footer col 2 -->
+			<div class="widgetarea f_col_2">
+
+				<div class="widget-container widget_pages">
+					<h3 style="text-transform: uppercase;font-size:16px;" class="widget-title"></h3>
+						<ul>
+						  <li class="even"><a href="#" hidefocus="true" style="outline: none;">Біз туралы</a></li>
+						  <li><a href="#" hidefocus="true" style="outline: none;">Контакты</a></li>
+						  <li class="even"><a href="#" hidefocus="true" style="outline: none;">Агенттіктерге</a></li>
+						  <li><a href="#" hidefocus="true" style="outline: none;">Ұсыныс</a></li>
+						  <li class="even"><a href="#" hidefocus="true" style="outline: none;">Қызметтер</a></li>
+						</ul>
+				</div>
+			</div>
+			<!--/ footer col 2 -->
+
+			<!--# footer col 3 -->
+			<div class="widgetarea f_col_3">
+
+				<!-- widget_contact -->
+				<div class="widget-container widget_contact">
+					<h3 style="text-transform: uppercase;font-size:16px;" class="widget-title">Байланыста болыңыз</h3>
+					<div class="inner">
+						<div class="contact-social">
+							<div><a href="https://t.me/pythonl" class="fa fa-telegram" style="font-size:36px; color: blue"></a></div>
+							<div><a href="https://youtube.com/playlist?list=PLA0M1Bcd0w8xO_39zZll2u1lz_Q-Mwn1F" class="fa fa-youtube" style="font-size:36px; color: red"></a></div>
+							<div><a href="https://instagram.com/balnurr_?igshid=YmMyMTA2M2Y=" class="fa fa-instagram" style="font-size:36px; color: hotpink"></a></div>
+						<div class="clear"></div>
+						</div>
+
+						<div class="contact-address">
+							<div class="phone"><em style="width: 75px;">Телефон:</em> <span>+7 707-777-17-07</span></div>
+							<div class="mail"><em style="width: 75px;">Email:</em> <a href="contact@traveling.com" hidefocus="true" style="outline: none;">contact@traveling.com</a></div>
+						</div>
+
+					</div>
+				</div>
+				<!--/ widget_contact -->
+			</div>
+			<!--/ footer col 3 -->
+
+
+			<div class="copyright">
+				<p class="alignleft">copyright 2023</p>
+				<p>Туристік сайт</p>
+			</div>
+
+		</div>
 	</div>
-</td></tr></table>
-<!-- Конец footer'а и страницы -->
-</body>
-</html>
+</div>
+<!--/ footer -->
+
+</div>

@@ -1,24 +1,395 @@
 {% extends 'travel/base.html' %}
+{% load static %}
+{% load travel_tags %}
+<head>
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,400italic,700|Sorts+Mill+Goudy:400,400italic" rel="stylesheet">
+
+    <!-- Mobile viewport optimized: h5bp.com/viewport -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'travel/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'travel/css/screen.css' %}">
+    <!-- custom CSS -->
+    <link rel="stylesheet" href="{% static 'travel/css/custom.css' %}">
+
+    <script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
+    <!-- JS libs -->
+    <script src="{% static 'travel/js/modernizr-2.5.3.min.js' %}"></script>
+    <script src="{% static 'travel/js/respond.min.js' %}"></script>
+    <script src="{% static 'travel/js/jquery.min.js' %}"></script>
+
+    <!-- scripts -->
+    <script src="{% static 'travel/js/jquery.easing.1.3.min.js' %}"></script>
+    <script src="{% static 'travel/js/hoverIntent.js' %}"></script>
+    <script src="{% static 'travel/js/general.js' %}"></script>
+    <!-- sliders -->
+    <script src="{% static 'travel/js/slides.min.jquery.js' %}"></script>
+    <!-- range sliders -->
+    <script src="{% static 'travel/js/jquery.slider.bundle.js' %}"></script>
+    <script src="{% static 'travel/js/jquery.slider.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'travel/css/jslider.css' %}">
+    <!-- custom input -->
+    <link href="{% static 'travel/css/customInput.css' %}" rel="stylesheet">
+    <script src="{% static 'travel/js/jquery.customInput.js' %}"></script>
+    <!-- datepicker -->
+    <link href="{% static 'travel/css/jquery-ui-1.8.20.custom.css' %}" rel="stylesheet">
+    <script src="{% static 'travel/js/jquery-ui-1.8.20.custom.min.js' %}"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $("#date_in, #date_out").datepicker({
+                dateFormat: 'MM dd, yy',
+                minDate: 0,
+                showOtherMonths: true
+            });
+        });
+    </script>
+</head>
 
 {% block content %}
-<ul class="list-articles">
-	{% for p in posts %}
-			<li><div class="article-panel">
-				<p class="first">Категория: {{p.cat}}</p>
-				<p class="last">Дата: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
-			</div>
+<!-- header slider -->
+<div class="container">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
 
-	{% if p.photo %}
-		<p><img class="img-article-left thumb" src="{{p.photo}}"></p>
-	{% endif %}
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" style="width: 100%">
 
-				<h2>{{p.title}}</h2>
-	{% autoescape on %}
-		{{p.content|linebreaks|truncatewords:50}}
-	{% endautoescape %}
-			<div class="clear"></div>
-			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
-			</li>
-	{% endfor %}
-</ul>
+      <div class="item active">
+        <img src="https://www.salonprivegroup.com/wp-content/uploads/2020/07/Ozen-Villa-1.jpg" alt="Los Angeles" style="width:100%;">
+        <div class="carousel-caption">
+          <h3>Жағажайлық саяхаттар</h3>
+        </div>
+      </div>
+
+        <div class="item">
+        <img src="https://darkpulse.com/wp-content/uploads/2021/07/Darkpulse-smart-city-solutions.jpg" alt="Chicago" style="width:100%;">
+        <div class="carousel-caption">
+          <h3>Түнгі қалалар</h3>
+        </div>
+      </div>
+
+      <div class="item">
+        <img src="https://mktravelclub.ru/media/pages/unique-trip/1novogodnjaja-gruzija-gory-more-i-znamenitoe-gostepriimstvo/9683416e2c-1668351811/mes.jpg" alt="Chicago" style="width:100%;">
+        <div class="carousel-caption">
+          <h3>Есте қаларлық сәттер</h3>
+        </div>
+      </div>
+
+      <div class="item">
+        <img src="https://pbs.twimg.com/media/EAbwRj5X4AADDAR?format=jpg&name=large" alt="New York" style="width:100%;">
+        <div class="carousel-caption">
+          <h3>Тарихи қалалармен танысу</h3>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+    <script>
+        jQuery(document).ready(function($) {
+                $('.header_slider').slides({
+                    generatePagination: false,
+                    generateNextPrev: true,
+                    play: 5000,
+                    pause: 3500,
+                    hoverPause: true,
+                    effect: 'fade',
+                    crossfade: true,
+                    preload: true,
+                    preloadImage: 'images/loading.gif'
+                });
+        });
+    </script>
+
+</div>
+<!--/ header slider -->
+
+<!-- before content -->
+<div class="before_content">
+<div class="before_inner">
+	<div class="container_12">
+
+        <div class="title">
+			<h2 style="text-transform: uppercase;font-weight: bold;font-size:19px;">Саяхатқа қай жерге барғыңыз келеді?</h2>
+            <span class="title_right"><a href="#" hidefocus="true" style="outline: none;">Барлық ұсынысты көру</a></span>
+        </div>
+
+        <div class="search_main">
+        	<form action="css/index.html#" method="get" class="form_search">
+
+                <div class="search_col_1">
+
+                    <div class="row input_styled inlinelist">
+                        <div class="rowRadio"><div class="custom-radio"><input type="radio" name="continent" value="africa" id="africa" checked=""><label for="africa" class="checked">АФРИКА</label></div> </div>
+                        <div class="rowRadio"><div class="custom-radio"><input type="radio" name="continent" value="europe" id="europe"><label for="europe" class="">ЕВРОПА</label></div> </div>
+                        <div class="rowRadio"><div class="custom-radio"><input type="radio" name="continent" value="america_c" id="america_c"><label for="america_c">АМЕРИКА</label></div> </div>
+                        <div class="rowRadio"><div class="custom-radio"><input type="radio" name="continent" value="australia" id="australia"><label for="australia">АВСТРАЛИЯ</label></div> </div>
+                        <div class="rowRadio"><div class="custom-radio"><input type="radio" name="continent" value="america_n" id="america_n"><label for="america_n" class="">МЕРТВОЕ МОРЕ</label></div> </div>
+                        <div class="rowRadio"><div class="custom-radio"><input type="radio" name="continent" value="carribean" id="carribean"><label for="carribean">КАРИБЫ</label></div> </div>
+                        <div class="rowRadio"><div class="custom-radio"><input type="radio" name="continent" value="asia" id="asia"><label for="asia">АЗИЯ</label></div> </div>
+                        <div class="rowRadio"><div class="custom-radio"><input type="radio" name="continent" value="america_s" id="america_s"><label for="america_s" class="">ЮЖНАЯ АМЕРИКА</label></div> </div>
+                        <div class="rowRadio"><div class="custom-radio"><input type="radio" name="continent" value="mid_east" id="mid_east"><label for="mid_east">ТИХИЙ ОКЕАН</label></div> </div>
+                    </div>
+
+                </div>
+
+                <div class="search_col_2">
+                	<div class="row rowInput">
+                        <input type="text" name="date_in" class="inputField hasDatepicker" value="Дата отправки" onfocus="if (this.value == &#39;Check-in date&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;Check-in date&#39;;}" id="date_in">
+                        <span class="input_icon"></span>
+                    </div>
+
+                    <div class="row">
+                        <input type="text" name="date_out" class="inputField hasDatepicker" value="Дата прибытия" onfocus="if (this.value == &#39;Check-out date&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;Check-out date&#39;;}" id="date_out">
+                        <span class="input_icon"></span>
+                    </div>
+
+                    <div class="row">
+                        <input type="text" name="city_from" class="inputField" value="Город отправки" onfocus="if (this.value == &#39;Departure City&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;Departure City&#39;;}">
+                    </div>
+
+                     <div class="row rowSubmit"><input type="submit" value="Іздеу" class="btn btn-find"></div>
+
+                </div>
+
+                <div class="clear"></div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+<!--/ before content -->
+
+<div id="middle" class="full_width">
+	<div class="container_12">
+
+		<!-- breadcrumbs -->
+        <div class="breadcrumbs"></div>
+        <!--/ breadcrumbs -->
+
+        <!-- content -->
+        <div class="content">
+
+            <div class="post-detail">
+            	<div class="entry">
+
+
+                <!-- LATEST offers list -->
+					<div class="title">
+						<h2 style="text-transform: uppercase;font-weight: bold;font-size:19px;">БІЗДІҢ СОҢҒЫ ТУРЛАР</h2>
+			            <span class="title_right"><a href="#" hidefocus="true" style="outline: none;">Барлық турларды көру</a></span>
+			        </div>
+
+                    <div class="grid_list" style="border-top: 1px solid #d9d9d9;">
+
+                        {% for p in posts %}
+                            <div class="list_item">
+                                <div class="item_img">
+                                    {% if p.photo %}
+                                       <img src="{{p.photo.url}}" alt="">
+                                    {% endif %}
+                                    <p class="caption"><a href="{{ p.get_absolute_url }}" hidefocus="true" style="outline: none; width: 165px;">{{p.title}}</a> <span class="price"><strong>{{p.price}}</strong></span></p>
+                                    <a href="{{ p.get_absolute_url }}" class="link-img" hidefocus="true" style="outline: none;">Толығырақ...</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+<!--                        <div class="list_item">-->
+<!--                        	<div class="item_img">-->
+<!--                                {% for p in posts %}-->
+<!--&lt;!&ndash;                                        <div class="article-panel">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <p class="first">Категория: {{p.cat}}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <p class="last">Дата: {{p.time_update|date:"d-m-Y H:i:s"}}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+
+<!--                                        {% if p.photo %}-->
+<!--                                            <p><img class="img-article-left thumb" src="{{p.photo}}"></p>-->
+<!--                                        {% endif %}-->
+
+<!--                                        <h2>{{p.title}}</h2>-->
+<!--                                        {% autoescape on %}-->
+<!--                                            {{p.content|linebreaks|truncatewords:50}}-->
+<!--                                        {% endautoescape %}-->
+<!--                                        <div class="clear"></div>-->
+<!--                                        <p class="caption"><a hidefocus="true" style="outline: none; width: 165px;">{{p.title}}</a> <span class="price"><strong>{{p.price}}</strong></span></p>-->
+<!--                                        <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Толығырақ...</a></p>-->
+<!--                                {% endfor %}-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div class="clear"></div>
+                    </div>
+
+                <!--/ LATEST offers list -->
+
+                	<div class="divider_space"></div>
+
+                <!-- HOLIDAYS offers list -->
+	                <div class="title">
+						<h2 style="text-transform: uppercase;font-weight: bold;font-size:19px;">Қызықты деректер</h2>
+				        <span class="title_right"><a href="#" hidefocus="true" style="outline: none;">аааа</a></span>
+					</div>
+
+                    <div class="boxed_list">
+
+                    	<div class="boxed_item">
+                        	<div class="boxed_icon"><img src="{% static 'travel/images/holidays_icon_1.png' %}" width="48" height="48" alt="SUMMER HOLIDAYS"></div>
+                        	<div class="boxed_title"><strong>ЛЕТНИЙ ОТПУСК</strong></div>
+                            <span><a href="#" hidefocus="true" style="outline: none;">243 предложения</a></span>
+                        </div>
+
+                        <div class="boxed_item odd">
+                        	<div class="boxed_icon"><img src="{% static 'travel/images/holidays_icon_2.png' %}" width="48" height="48" alt="ALL INCLUSIVE"></div>
+                        	<div class="boxed_title"><strong>ВСЕ ВКЛЮЧЕНО</strong></div>
+                            <span><a href="#" hidefocus="true" style="outline: none;">65 предложений</a></span>
+                        </div>
+
+                        <div class="boxed_item">
+                        	<div class="boxed_icon"><img src="{% static 'travel/images/holidays_icon_3.png' %}" width="48" height="48" alt="FAMILY HOLIDAYS"></div>
+                        	<div class="boxed_title"><strong>СЕМЕЙНЫЙ ОТДЫХ</strong></div>
+                            <span><a href="#" hidefocus="true" style="outline: none;">27 предложений</a></span>
+                        </div>
+
+                        <div class="boxed_item odd">
+                        	<div class="boxed_icon"><img src="{% static 'travel/images/holidays_icon_4.png' %}" width="48" height="48" alt="LUXURY CITY BREAKS"></div>
+                        	<div class="boxed_title"><strong>ЛЮКСОВЫЙ ОТДЫХ</strong></div>
+                            <span><a href="#" hidefocus="true" style="outline: none;">78 предложений</a></span>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="boxed_list boxed_list2">
+
+                    	<div class="boxed_item">
+                        	<div class="boxed_title_arrow"><strong>Горячие Предложения</strong></div>
+                        </div>
+
+                        <div class="boxed_item odd">
+                        	<div class="boxed_icon"><span class="price_box"><strong>15 000</strong></span></div>
+                        	<div class="boxed_title"><a href="#" hidefocus="true" style="outline: none;"><strong>Houda Golf Beach 5*</strong></a></div>
+                            <span><a href="#" hidefocus="true" style="outline: none;">Тунис</a></span>
+                        </div>
+
+                        <div class="boxed_item">
+                        	<div class="boxed_icon"><span class="price_box"><strong>24 800</strong></span></div>
+                        	<div class="boxed_title"><a href="#" hidefocus="true" style="outline: none;"><strong>Hilton Sharks Bay 4*</strong></a></div>
+                            <span><a href="#" hidefocus="true" style="outline: none;">Египет</a></span>
+                        </div>
+
+                        <div class="boxed_item odd">
+                        	<div class="boxed_icon"><span class="price_box"><strong>19 800</strong></span></div>
+                        	<div class="boxed_title"><a href="#" hidefocus="true" style="outline: none;"><strong>JW Marriot Cancun 5*</strong></a></div>
+                            <span><a href="#" hidefocus="true" style="outline: none;">Мексика</a></span>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+
+                <!--/ HOLIDAYS offers list -->
+
+                	<div class="divider_space_big"></div>
+
+                <!-- SPECIAL offers list -->
+					<div class="title">
+						<h2 style="text-transform: uppercase;font-weight: bold;font-size:19px;">ӨЗ ТАҢДАУЫНДЫ ЖАСА</h2>
+			            <span class="title_right"><a href="#" hidefocus="true" style="outline: none;">Барлық тур агенттіктерді көру</a></span>
+			        </div>
+
+                    <div class="grid_list promo_list" style="border-top: 1px solid #d9d9d9;">
+
+                        <div class="list_item">
+                        	<div class="item_img">
+                            <img src="{% static 'travel/images/offer_07.jpg' %}" alt="">
+                            <p class="caption"><a href="#" hidefocus="true" style="outline: none;width: 165px;">Пуэрто Рико - 7 ночей</a> <span class="price"><strong>27 900 Р</strong></span></p>
+                            <span class="ribbon off-30">СКИДКА: 30%</span>
+                            <a href="#" class="link-img" hidefocus="true" style="outline: none;">подробнее...</a>
+                            </div>
+                        </div>
+
+                        <div class="list_item">
+                        	<div class="item_img">
+                            <img src="{% static 'travel/images/offer_08.jpg' %}" alt="">
+                            <p class="caption"><a href="#" hidefocus="true" style="outline: none;width: 165px;">Чикаго - 6 ночей</a> <span class="price"><strong>36 470 Р</strong></span></p>
+                            <span class="ribbon off-25">СКИДКА: 25%</span>
+                            <a href="#" class="link-img" hidefocus="true" style="outline: none;">подробнее...</a>
+                            </div>
+                        </div>
+
+                        <div class="list_item">
+                        	<div class="item_img">
+                            <img src="{% static 'travel/images/offer_09.jpg' %}" alt="">
+                            <p class="caption"><a href="#" hidefocus="true" style="outline: none;width: 165px;">Малайзия - 5 ночей</a> <span class="price"><strong>16 450 Р</strong></span></p>
+                            <span class="ribbon off-65">СКИДКА: 65%</span>
+                            <a href="#" class="link-img" hidefocus="true" style="outline: none;">подробнее...</a>
+                            </div>
+                        </div>
+
+                        <div class="list_item">
+                        	<div class="item_img">
+                            <img src="{% static 'travel/images/offer_10.jpg' %}" alt="">
+                            <p class="caption"><a href="#" hidefocus="true" style="outline: none;width: 165px;">Мексика - 12 ночей</a> <span class="price"><strong>28 000 Р</strong></span></p>
+                            <span class="ribbon off-15">СКИДКА: 15%</span>
+                            <a href="#" class="link-img" hidefocus="true" style="outline: none;">подробнее...</a>
+                            </div>
+                        </div>
+
+                        <div class="list_item">
+                        	<div class="item_img">
+                            <img src="{% static 'travel/images/offer_11.jpg' %}" alt="">
+                            <p class="caption"><a href="#" hidefocus="true" style="outline: none;width: 165px;">Тайланд - 9 ночей</a> <span class="price"><strong>23 400 Р</strong></span></p>
+                            <span class="ribbon off-50">СКИДКА: 50%</span>
+                            <a href="#" class="link-img" hidefocus="true" style="outline: none;">подробнее...</a>
+                            </div>
+                        </div>
+
+                        <div class="list_item">
+                        	<div class="item_img">
+                            <img src="{% static 'travel/images/offer_12.jpg' %}" alt="">
+                            <p class="caption"><a href="#" hidefocus="true" style="outline: none;width: 165px;">Андреас, Чили - 17 ночей</a> <span class="price"><strong>24 500 Р</strong></span></p>
+                            <span class="ribbon off-35">СКИДКА: 35%</span>
+                            <a href="#" class="link-img" hidefocus="true" style="outline: none;">подробнее...</a>
+                            </div>
+                        </div>
+
+                        <div class="clear"></div>
+                    </div>
+
+
+                <!--/ SPECIAL offers list -->
+
+                <div class="clear"></div>
+                </div>
+            </div>
+
+        </div>
+        <!--/ content -->
+
+        <div class="clear"></div>
+    </div>
+</div>
+<!--/ middle -->
+
 {% endblock %}
