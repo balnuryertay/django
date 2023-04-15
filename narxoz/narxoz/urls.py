@@ -22,6 +22,7 @@ from travel.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('captcha/', include('captcha.urls')),
     path('', include('travel.urls')),
 ]
 
