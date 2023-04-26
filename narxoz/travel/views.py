@@ -2,15 +2,22 @@ from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
+from django.forms import model_to_dict
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseServerError, HttpResponseForbidden, \
     HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework import generics, mixins
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .forms import *
 from .models import *
+from .serializers import TravelSerializer
 from .utils import *
 
 class TravelHome(DataMixin, ListView):
@@ -124,8 +131,78 @@ class ContactFormView(DataMixin, FormView):
         print(form.cleaned_data)
         return redirect('home')
 
+
+class TravelViewset(mixins.CreateModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.ListModelMixin,
+                    GenericViewSet):
+    # queryset = Travel.objects.all()
+    serializer_class = TravelSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs.get("pk")
+
+        if not pk:
+            return Travel.objects.all()[:3]
+
+        return Travel.objects.filter(pk=pk)
+
+    @action(methods=['get'], detail=False)
+    def category(self, request, pk=None):
+        cats = Category.objects.get(pk=pk)
+        return Response({'cats': cats.name})
+
+
 # def login(request):
 #     return HttpResponse('Авторизация')
+
+# class TravelAPIList(generics.ListCreateAPIView):
+#     queryset = Travel.objects.all()
+#     serializer_class = TravelSerializer
+#
+# class TravelAPIUpdate(generics.UpdateAPIView):
+#     queryset = Travel.objects.all()
+#     serializer_class = TravelSerializer
+#
+# class TravelAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Travel.objects.all()
+#     serializer_class = TravelSerializer
+
+# class TravelAPIView(APIView):
+#     def get(self, request):
+#         t = Travel.objects.all()
+#         return Response({'posts': TravelSerializer(t, many=True).data})
+#
+#     def post(self, request):
+#         serializer = TravelSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#
+#         return Response({'post': serializer.data})
+#
+#     def put(self, request, *args, **kwargs):
+#         pk = kwargs.get("pk", None)
+#         if not pk:
+#             return Response({"error": "Method PUT not allowed"})
+#
+#         try:
+#             instance = Travel.objects.get(pk=pk)
+#         except:
+#             return Response({"error": "Object does not exists"})
+#
+#         serializer = TravelSerializer(data=request.data, instance=instance)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response({"post": serializer.data})
+#
+#     def delete(self, request, *args, **kwargs):
+#         pk = kwargs.get("pk", None)
+#         if not pk:
+#             return Response({"error": "Method PUT not allowed"})
+#
+#         return Response({"post": "delete post " + str(pk)})
+
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>404<br>Страница не найдена</h1>')
