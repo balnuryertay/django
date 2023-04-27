@@ -1,0 +1,10 @@
+{% extends 'travel/base.html' %}
+
+{% block content %}
+<h1>{{agency.title}}</h1>
+
+{% if agency.photo %}
+<p><img class="img-article-left" src="{{agency.photo.url}}" style="width: 200px; height: 200px"></p>
+{% endif %}
+{{agency.content|linebreaks}}
+{% endblock %}

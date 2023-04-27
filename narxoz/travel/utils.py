@@ -4,12 +4,11 @@ from django.core.cache import cache
 from .models import *
 
 menu = [
+    {'title':"Басты бет",'url_name':'home'},
     {'title':"Біз туралы",'url_name':'about'},
-    {'title':"Тур агенттіктер",'url_name':'home'},
-    # {'title':"Барлық категориялар",'url_name':'category/<slug:cat_slug>'},
-    {'title':"Қызметтер",'url_name':'qyzmet'},
-    {'title':"Байланыс", 'url_name':'contact'},
-    {'title':"Логин", 'url_name':'login'}]
+    {'title':"Тур агенттіктер",'url_name':'qyzmet'},
+    {'title':"Турлар",'url_name':'tour'},
+    {'title':"Байланыс", 'url_name':'contact'}]
 
 class DataMixin:
     paginate_by = 20

@@ -37,6 +37,28 @@ class TravelHome(DataMixin, ListView):
     def get_queryset(self):
         return Travel.objects.filter(is_published=True).select_related('cat')
 
+class TourHome(DataMixin, ListView):
+    model = Travel
+    template_name = 'travel/tour.html'
+    context_object_name = 'posts'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Турлар")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        return Travel.objects.filter(is_published=True).select_related('cat')
+
+class AgencyHome(DataMixin, ListView):
+    model = Travel_Agency
+    template_name = 'travel/agency.html'
+    context_object_name = 'agencies'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Тур агенттіктер")
+        return dict(list(context.items()) + list(c_def.items()))
 
 class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddPostForm
@@ -48,6 +70,27 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title="Мақала қосу")
+        return dict(list(context.items()) + list(c_def.items()))
+
+class AddAgency(LoginRequiredMixin, DataMixin, CreateView):
+    form_class = AddAgencyForm
+    template_name = 'travel/addagency.html'
+    success_url = reverse_lazy('home')
+    login_url = reverse_lazy('home')
+    raise_exception = True
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Тур агенттік қосу")
+        return dict(list(context.items()) + list(c_def.items()))
+
+class TravelAgency(DataMixin, DetailView):
+    model = Travel_Agency
+    template_name = 'travel/agency.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="agency")
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -62,7 +105,16 @@ class ShowPost(DataMixin, DetailView):
         c_def = self.get_user_context(title=context['post'])
         return dict(list(context.items()) + list(c_def.items()))
 
+class ShowAgency(DataMixin, DetailView):
+    model = Travel_Agency
+    template_name = 'travel/tour_agency.html'
+    slug_url_kwarg = 'agency_slug'
+    context_object_name = 'agency'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title=context['agency'])
+        return dict(list(context.items()) + list(c_def.items()))
 
 class TravelCategory(DataMixin, ListView):
     model = Travel
@@ -119,7 +171,7 @@ def about(request):
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'travel/about.html', {'page_obj': page_obj, 'menu': menu, 'title': 'About us'})
+    return render(request, 'travel/about.html', {'page_obj': page_obj, 'menu': menu, 'title': 'Біз туралы'})
 
 class ContactFormView(DataMixin, FormView):
     form_class = ContactForm
@@ -128,13 +180,24 @@ class ContactFormView(DataMixin, FormView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Обратная связь")
+        c_def = self.get_user_context(title="Кері байланыс")
         return dict(list(context.items()) + list(c_def.items()))
 
     def form_valid(self, form):
         print(form.cleaned_data)
         return redirect('home')
 
+class AddContact(LoginRequiredMixin, DataMixin, CreateView):
+    form_class = ContactForm
+    template_name = 'travel/contact.html'
+    success_url = reverse_lazy('home')
+    login_url = reverse_lazy('home')
+    raise_exception = True
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Contact")
+        return dict(list(context.items()) + list(c_def.items()))
 
 class TravelAPIListPagination(PageNumberPagination):
     page_size = 3

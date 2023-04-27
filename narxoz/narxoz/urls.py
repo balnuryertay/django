@@ -22,7 +22,6 @@ from narxoz import settings
 from travel.views import *
 from rest_framework import routers
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/drf-auth/', include('rest_framework.urls')),
@@ -36,18 +35,15 @@ urlpatterns = [
     path('api/v1/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
     path('captcha/', include('captcha.urls')),
-    path('', include('travel.urls')),
-    path('api/v1/', include(router.urls))
-    # path('api/v1/travellist/', TravelViewset.as_view({'get': 'list'})),
-    # path('api/v1/travellist/<int:pk>/', TravelViewset.as_view({'put': 'update'}))
+    path('', include('travel.urls'))
 ]
 
 if settings.DEBUG:
     import debug_toolbar
 
     urlpatterns = [
-        path('__debug__/', include('debug_toolbar.urls')),
-    ]
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

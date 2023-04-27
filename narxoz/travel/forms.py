@@ -13,7 +13,23 @@ class AddPostForm(forms.Form):
 
     class Meta:
         model = Travel
-        fields = ['title', 'slug', 'content', 'is_published', 'cat']
+        fields = ['title', 'slug', 'content', 'price', 'is_published', 'cat']
+        widgets = {
+            'title': forms.TextInput(attrs={'class':'form-input'}),
+            'content': forms.Textarea(attrs={'cols':68, 'roms': 10}),
+        }
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if len(title) > 200:
+            raise ValidationError('Ұзындық 200-ден асып кетті')
+
+        return title
+
+class AddAgencyForm(forms.Form):
+    class Meta:
+        model = Travel
+        fields = ['title', 'slug', 'content', 'is_published']
         widgets = {
             'title': forms.TextInput(attrs={'class':'form-input'}),
             'content': forms.Textarea(attrs={'cols':68, 'roms': 10}),
@@ -45,3 +61,11 @@ class ContactForm(forms.Form):
     email = forms.EmailField(label='Email')
     content = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
     captcha = CaptchaField()
+
+    class Meta:
+        model = Contact
+        fields = ['title', 'email', 'content', 'is_published']
+        widgets = {
+            'title': forms.TextInput(attrs={'class':'form-input'}),
+            'content': forms.Textarea(attrs={'cols':68, 'roms': 10}),
+        }

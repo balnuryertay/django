@@ -1,0 +1,81 @@
+{% extends 'travel/base.html' %}
+{% block content %}
+
+<div class="card" style="width: 18rem; margin-top: 80px; margin-left: 50px">
+    <div class="card-header">
+       Категориялар
+    </div>
+    <ul class="list-group list-group-flush">
+        {% if cat_selected == 0 %}
+            <li class="list-group-item"><a href="{% url 'tour' %}">Барлық категориялар</a></li>
+        {% else %}
+                <li class="list-group-item" ><a href="{% url 'tour' %}">Барлық категориялар</a></li>
+        {% endif %}
+
+        {% for c in cats %}
+            {% if c.travel__count > 0 %}
+                {% if c.pk == cat_selected %}
+                    <li class="selected">{{ c.name }} </li>
+                {% else %}
+                    <li class="list-group-item"><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+
+        <div class="row" style="margin-top: 100px">
+            {% for p in posts %}
+                <div class="col-lg-3 d-flex align-items-stretch" style="margin-left: 60px" >
+                    <div class="card">
+                        {% if p.photo %}
+                           <img class="card-img-top" src="{{p.photo.url}}" alt="Post image)">
+                        {% endif %}
+                        <div class="card-body">
+                            <h6 class="card-title">Аты:{{ p.title }}</h6>
+                            <h7 class="card-title">Категория: {{ p.cat}}</h7><br>
+                            <h7 class="card-title">Бағасы: {{ p.price}}</h7>
+                            <p class="card-text">{% autoescape on %} {{p.content|linebreaks|truncatewords:10 }} {% endautoescape %}</p>
+                            <a href="{{ p.get_absolute_url }}" class="btn btn-primary" style="margin-top: 10px"> Толығырақ </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+<!-- Блок контента -->
+<div class="content-text">
+{#{% block content %}#}
+{#{% endblock %}#}
+{% if page_obj.has_other_pages %}
+<nav class="list-pages">
+    <ul>
+{% if page_obj.has_previous %}
+<li class="page-num">
+ <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+</li>
+{% endif %}
+
+        {% for p in paginator.page_range %}
+  {% if page_obj.number == p %}
+        <li class="page-num page-num-selected">{{ p }}</li>
+  {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2  %}
+        <li class="page-num">
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+  {% endif %}
+        {% endfor %}
+
+{% if page_obj.has_next %}
+<li class="page-num">
+ <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+</li>
+{% endif %}
+
+    </ul>
+</nav>
+{% endif %}
+ </div>
+<!-- Конец блока контента -->
+
+{% endblock %}
