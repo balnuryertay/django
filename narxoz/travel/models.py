@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from rest_framework.authtoken.admin import User
+
 
 class Travel(models.Model):
     title = models.CharField(max_length=255, verbose_name="Travel")
@@ -11,6 +13,7 @@ class Travel(models.Model):
     time_update = models.DateTimeField(auto_now=True, verbose_name="Өзгертілген уақыты")
     is_published = models.BooleanField(default=True, verbose_name="Публикация")
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name="Категориясы")
+    user = models.ForeignKey(User, verbose_name='Пайдаланушы', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

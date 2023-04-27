@@ -10,6 +10,9 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import generics, mixins
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -17,6 +20,7 @@ from rest_framework.views import APIView
 
 from .forms import *
 from .models import *
+from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from .serializers import TravelSerializer
 from .utils import *
 
@@ -132,27 +136,27 @@ class ContactFormView(DataMixin, FormView):
         return redirect('home')
 
 
-class TravelViewset(mixins.CreateModelMixin,
-                    mixins.RetrieveModelMixin,
-                    mixins.UpdateModelMixin,
-                    mixins.ListModelMixin,
-                    GenericViewSet):
-    # queryset = Travel.objects.all()
+class TravelAPIListPagination(PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
+
+class TravelAPIList(generics.ListCreateAPIView):
+    queryset = Travel.objects.all()
     serializer_class = TravelSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+    pagination_class = TravelAPIListPagination
 
-    def get_queryset(self):
-        pk = self.kwargs.get("pk")
+class TravelAPIUpdate(generics.RetrieveUpdateAPIView):
+    queryset = Travel.objects.all()
+    serializer_class = TravelSerializer
+    permission_classes = (IsAuthenticated, )
+    # authentication_classes = (TokenAuthentication, )
 
-        if not pk:
-            return Travel.objects.all()[:3]
-
-        return Travel.objects.filter(pk=pk)
-
-    @action(methods=['get'], detail=False)
-    def category(self, request, pk=None):
-        cats = Category.objects.get(pk=pk)
-        return Response({'cats': cats.name})
-
+class TravelAPIDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Travel.objects.all()
+    serializer_class = TravelSerializer
+    permission_classes = (IsAdminOrReadOnly, )
 
 # def login(request):
 #     return HttpResponse('Авторизация')
